@@ -1,21 +1,18 @@
 from __future__ import annotations
 
 import argparse
+import importlib.metadata
 import pathlib
-import tomllib
 from collections.abc import Sequence
 
 from bills_sql_linter import fixer, linter
 
 SUCCESS = 0
 FAILURE = 1
-HERE = pathlib.Path(__file__).parent
-PYPROJECT = HERE.parent.parent / "pyproject.toml"
 
 
 def _get_version() -> str:
-    pyproject = tomllib.loads(PYPROJECT.read_text(encoding="utf-8"))
-    return pyproject["project"]["version"]
+    return f"%(prog)s {importlib.metadata.version('bills-sql-linter')}"
 
 
 def _add_common_options(parser: argparse.ArgumentParser) -> None:
