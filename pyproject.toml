@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://json.schemastore.org/pyproject.json
 
 [build-system]
-requires = ["uv_build>=0.8.2,<1.0.0"]
+requires = ["uv_build>=0.8"]
 build-backend = "uv_build"
 
 [project]
@@ -18,7 +18,7 @@ bills-sql-linter = "bills_sql_linter.main:main"
 
 [dependency-groups]
 dev = [
-    "poethepoet>=0.41.0",
+    "poethepoet>=0.42.1",
     "pre-commit>=4.5.1",
 ]
 test = [
@@ -28,13 +28,13 @@ test = [
 
 
 [tool.uv]
-required-version = ">=0.8,<1.0"
+required-version = ">=0.8"
 default-groups = "all"
 
 
 [tool.poe]
 verbosity = -1
-#envfile = ".env"
+envfile.optional = ".env"
 
 [tool.poe.tasks]
 install.shell = """
