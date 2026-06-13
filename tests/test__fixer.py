@@ -44,6 +44,5 @@ def simple() -> BeforeAndAfterFile:
     return BeforeAndAfterFile.from_fixture("simple")
 
 
-@pytest.mark.skip("Fix isn't built yet")
 def test__fix_a_simple_file(simple: BeforeAndAfterFile) -> None:
     assert fixer.fix(simple.before) == simple.after

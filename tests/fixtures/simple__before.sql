@@ -1,1 +1,5 @@
-SELECT COL_1, COL_2     FROM TABLE_1 where col_3 in ('OR','IN','AND')
+select
+    col_1,
+    col_2
+from table_1
+where col_3 in ('OR', 'IN', 'AND')
