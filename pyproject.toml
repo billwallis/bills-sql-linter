@@ -1,7 +1,6 @@
 # yaml-language-server: $schema=https://json.schemastore.org/pyproject.json
-
 [build-system]
-requires = ["uv_build>=0.8"]
+requires = ["uv_build"]
 build-backend = "uv_build"
 
 [project]
@@ -10,6 +9,7 @@ version = "0.0.0"
 description = "Personal SQL linter and formatter."
 authors = [{name = "billwallis"}]
 readme = "README.md"
+license-files = ["LICENSE"]
 requires-python = ">=3.13"
 dependencies = []
 
@@ -18,17 +18,17 @@ bills-sql-linter = "bills_sql_linter.main:main"
 
 [dependency-groups]
 dev = [
-    "poethepoet>=0.42.1",
-    "pre-commit>=4.5.1",
+    "poethepoet>=0.46.0",
+    "pre-commit>=4.6.0",
 ]
 test = [
+    "coverage>=7.13.5",
+    "covdefaults>=2.3.0",
     "pytest>=9.0.3",
-    "pytest-cov>=7.0.0",
 ]
 
 
 [tool.uv]
-required-version = ">=0.8"
 default-groups = "all"
 
 
@@ -45,7 +45,11 @@ upgrade.shell = """
     uv sync --refresh --upgrade
     uv run pre-commit autoupdate
 """
-test = "uv run pytest -vvv"
+test.shell = """
+    uv run coverage run -m pytest -vvv
+    uv run coverage report --no-skip-covered
+    uv run coverage xml --quiet
+"""
 
 [tool.poe.tasks.lint]
 control.expr = "sys.platform"
@@ -69,8 +73,15 @@ shell = """
 
 
 [tool.pytest.ini_options]
-addopts = "--cov=src --cov-fail-under=00"  # TODO: Increase coverage threshold
 testpaths = ["tests"]
+
+[tool.coverage]
+run.plugins = ["covdefaults"]  # https://youtu.be/70T6OxKwxm0
+report.fail_under = 10
+report.exclude_lines = [
+    "@pytest.mark.skip",
+    "@pytest.mark.xfail",
+]
 
 
 [tool.ruff]
