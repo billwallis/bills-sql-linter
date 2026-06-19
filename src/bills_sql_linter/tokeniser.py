@@ -7,6 +7,7 @@ from collections.abc import Generator
 class TokenType(enum.StrEnum):
     # Literals
     NUMBER = r"\d+(\.\d*)?"
+    STRING = r"'[\s\S]*'"  # what about escaped quotes?
 
     # Operators
     STAR = r"\*"
@@ -22,8 +23,6 @@ class TokenType(enum.StrEnum):
     ESCAPED_IDENTIFIER = r"\\[a-z]"
 
     # Punctuation
-    SINGLE_QUOTE = r"'"
-    DOUBLE_QUOTE = r'"'
     COMMA = r","
     SEMICOLON = r";"
     SPACE = r"[ \t]+"
